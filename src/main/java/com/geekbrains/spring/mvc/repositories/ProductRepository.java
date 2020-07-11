@@ -1,15 +1,17 @@
 package com.geekbrains.spring.mvc.repositories;
 
 import com.geekbrains.spring.mvc.model.Product;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
-import java.util.List;
 
 @Repository
 public interface ProductRepository extends JpaRepository<Product, Long> {
     Product findOneByTitle(String title);
-    List<Product> findAllByCostGreaterThan(int minCost);
-    List<Product> findAllByCostLessThan(int maxCost);
-    List<Product> findAllByCostGreaterThanAndCostLessThan(int minCost, int maxCost);
+    Page<Product> findAllByCostGreaterThan(Pageable pageable, int minCost);
+    Page<Product> findAllByCostLessThan(Pageable pageable, int maxCost);
+    Page<Product> findAll(Pageable pageable);
+    Page<Product> findAllByCostGreaterThanAndCostLessThan(Pageable pageable, int minCost, int maxCost);
 }

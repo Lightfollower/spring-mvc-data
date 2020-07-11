@@ -22,28 +22,28 @@ public class ProductsController {
 
     @GetMapping
     public String showAllProducts(Model model,
-//                                  @RequestParam(name = "p", defaultValue = "1") Integer pageNumber,
+                                  @RequestParam(name = "p", defaultValue = "1") Integer pageNumber,
                                   @RequestParam(name = "min_cost", required = false) Integer minCost,
                                   @RequestParam(name = "max_cost", required = false) Integer maxCost) {
 
-        if(maxCost != null && minCost != null){
-            List<Product> products = productService.findByMaxAndMinCost(/*pageNumber*/minCost, maxCost)/*.getContent()*/;
+        if (maxCost != null && minCost != null) {
+            List<Product> products = productService.findByMaxAndMinCost(pageNumber, minCost, maxCost).getContent();
             model.addAttribute("products", products);
             return "all_products";
         }
 
-        if(minCost != null){
-            List<Product> products = productService.findByMinCost(/*pageNumber,*/ minCost)/*.getContent()*/;
+        if (minCost != null) {
+            List<Product> products = productService.findByMinCost(pageNumber, minCost).getContent();
             model.addAttribute("products", products);
             return "all_products";
         }
 
-        if(maxCost != null){
-            List<Product> products = productService.findByMaxCost(/*pageNumber,*/ maxCost)/*.getContent()*/;
+        if (maxCost != null) {
+            List<Product> products = productService.findByMaxCost(pageNumber, maxCost).getContent();
             model.addAttribute("products", products);
             return "all_products";
         }
-        List<Product> products = productService.findAll(/*pageNumber*/)/*.getContent()*/;
+        List<Product> products = productService.findAll(pageNumber).getContent();
         model.addAttribute("products", products);
         return "all_products";
     }
@@ -75,11 +75,5 @@ public class ProductsController {
     @ResponseBody
     public Product infoByTitle(@RequestParam String title) {
         return productService.findByTitle(title);
-    }
-
-    @GetMapping("/find_by_min_cost")
-    @ResponseBody
-    public List<Product> findProductProductsByMinCost(@RequestParam int cost) {
-        return productService.findByMinCost(cost);
     }
 }
