@@ -8,6 +8,8 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+
 @Service
 public class ProductService {
     private ProductRepository productRepository;
@@ -29,22 +31,18 @@ public class ProductService {
         return productRepository.findOneByTitle(title);
     }
 
-    public Page<Product> findByMinCost(int pageNumber, int minCost) {
-        return productRepository.findAllByCostGreaterThan(PageRequest.of(pageNumber-1,5), minCost);
-    }
-
-    public Page<Product> findByMaxCost(int pageNumber, int maxCost) {
-        return productRepository.findAllByCostLessThan(PageRequest.of(pageNumber-1,5), maxCost);
-    }
-
-    public Page<Product> findByMaxAndMinCost(int pageNumber, int minCost, int maxCost){
-        return productRepository.findAllByCostGreaterThanAndCostLessThan(PageRequest.of(pageNumber-1,5),minCost, maxCost);
-    }
-
-    public Page<Product> findAll( Integer pageNumber) {
-        if (pageNumber < 1L) {
-            pageNumber = 1;
+    public List<Product> findRequiredProducts(Integer pageNumber, Integer minCost, Integer maxCost) {
+        if (maxCost != null && minCost != null) {
+            return productRepository.findAllByCostGreaterThanAndCostLessThan(PageRequest.of(pageNumber - 1, 5), minCost, maxCost).getContent();
         }
-        return productRepository.findAll(PageRequest.of(pageNumber - 1, 5));
+
+        if (minCost != null) {
+            return productRepository.findAllByCostGreaterThan(PageRequest.of(pageNumber - 1, 5), minCost).getContent();
+        }
+
+        if (maxCost != null) {
+            return productRepository.findAllByCostLessThan(PageRequest.of(pageNumber - 1, 5), maxCost).getContent();
+        }
+        return productRepository.findAll(PageRequest.of(pageNumber - 1, 5)).getContent();
     }
 }
