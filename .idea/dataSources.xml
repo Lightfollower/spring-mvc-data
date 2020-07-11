@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="DataSourceManagerImpl" format="xml" multifile-model="true">
+    <data-source source="LOCAL" name="dataSource" uuid="1bd79291-d6c7-474b-8e0d-9933e9060dfe">
+      <driver-ref>h2.unified</driver-ref>
+      <synchronize>true</synchronize>
+      <imported>true</imported>
+      <remarks>c3p0
+
+F:/java_spring/spring-mvc-data/src/main/webapp/WEB-INF/beans.xml</remarks>
+      <jdbc-driver>org.h2.Driver</jdbc-driver>
+      <jdbc-url>jdbc:h2:mem:mydatabase;MODE=PostgreSQL</jdbc-url>
+    </data-source>
+    <data-source source="LOCAL" name="hibernate.cfg.xml/Hibernate" uuid="00b102fb-3e8a-47a2-abca-ca407c647c33">
+      <driver-ref>h2.unified</driver-ref>
+      <synchronize>true</synchronize>
+      <imported>true</imported>
+      <remarks>Hibernate
+
+F:/java_spring/spring-mvc-data/src/main/webapp/hibernate.cfg.xml</remarks>
+      <jdbc-driver>org.h2.Driver</jdbc-driver>
+      <jdbc-url>jdbc:h2:mem:mydatabase;MODE=PostgreSQL</jdbc-url>
+    </data-source>
+  </component>
+</project>

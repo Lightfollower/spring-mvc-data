@@ -32,17 +32,10 @@ public class ProductService {
     }
 
     public List<Product> findRequiredProducts(Integer pageNumber, Integer minCost, Integer maxCost) {
-        if (maxCost != null && minCost != null) {
-            return productRepository.findAllByCostGreaterThanAndCostLessThan(PageRequest.of(pageNumber - 1, 5), minCost, maxCost).getContent();
-        }
-
-        if (minCost != null) {
-            return productRepository.findAllByCostGreaterThan(PageRequest.of(pageNumber - 1, 5), minCost).getContent();
-        }
-
-        if (maxCost != null) {
-            return productRepository.findAllByCostLessThan(PageRequest.of(pageNumber - 1, 5), maxCost).getContent();
-        }
-        return productRepository.findAll(PageRequest.of(pageNumber - 1, 5)).getContent();
+        if (minCost == null)
+            minCost = -1;
+        if (maxCost == null)
+            maxCost = Integer.MAX_VALUE;
+        return productRepository.findAllByCostGreaterThanAndCostLessThan(PageRequest.of(pageNumber - 1, 5), minCost, maxCost).getContent();
     }
 }

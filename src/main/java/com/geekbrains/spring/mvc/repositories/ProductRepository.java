@@ -10,8 +10,6 @@ import org.springframework.stereotype.Repository;
 @Repository
 public interface ProductRepository extends JpaRepository<Product, Long> {
     Product findOneByTitle(String title);
-    Page<Product> findAllByCostGreaterThan(Pageable pageable, int minCost);
-    Page<Product> findAllByCostLessThan(Pageable pageable, int maxCost);
     Page<Product> findAll(Pageable pageable);
     Page<Product> findAllByCostGreaterThanAndCostLessThan(Pageable pageable, int minCost, int maxCost);
 }
