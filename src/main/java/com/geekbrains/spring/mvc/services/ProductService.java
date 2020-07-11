@@ -20,38 +20,47 @@ public class ProductService {
         this.productRepository = productRepository;
     }
 
-    public List<Product> getAll() {
-        return productRepository.findAll();
-    }
+//    public List<Product> getAll() {
+//        return productRepository.findAll();
+//    }
 
     public Product saveOrUpdate(Product product) {
         return productRepository.save(product);
     }
 
     public Product findById(Long id) {
-        return productRepository.findById(id);
+        return productRepository.findById(id).orElseThrow(() -> new ProductNotFoundException("Can't found product with id = " + id));
     }
 
     public Product findByTitle(String title) {
         return productRepository.findOneByTitle(title);
     }
 
-    public List<Product> findByMinCost(int minCost) {
+    public List<Product> findByMinCost(/*int pageNumber,*/ int minCost) {
         return productRepository.findAllByCostGreaterThan(minCost);
     }
 
-    public Page<Product> findByPage(int pageNumber, int pageSize) {
-        return productRepository.findAll(PageRequest.of(pageNumber, pageSize));
+    public List<Product> findByMaxCost(int maxCost) {
+        return productRepository.findAllByCostLessThan(maxCost);
     }
 
-    public List<Product> findAll() {
-        return productRepository.findAll();
+    public List<Product> findByMaxAndMinCost(int minCost, int maxCost){
+        return productRepository.findAllByCostGreaterThanAndCostLessThan(minCost, maxCost);
+    }
+//    public Page<Product> findByPage(int pageNumber, int pageSize) {
+//        return productRepository.findAll(PageRequest.of(pageNumber, pageSize));
+//    }
+
+//    public List<Product> findAll() {
+//        return productRepository.findAll();
+//    }
+
+    public List<Product> findAll(/* Integer page*/) {
+//        if (page < 1L) {
+//            page = 1;
+//        }
+        return productRepository.findAll(/*PageRequest.of(page - 1, 5)*/);
     }
 
-    public Page<Product> findAll( Integer page) {
-        if (page < 1L) {
-            page = 1;
-        }
-        return productRepository.findAll(PageRequest.of(page - 1, 5));
-    }
+
 }

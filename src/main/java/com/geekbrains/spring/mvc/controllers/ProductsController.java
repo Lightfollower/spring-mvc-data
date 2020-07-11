@@ -1,10 +1,8 @@
 package com.geekbrains.spring.mvc.controllers;
 
 import com.geekbrains.spring.mvc.model.Product;
-import com.geekbrains.spring.mvc.repositories.specifications.ProductSpecifications;
 import com.geekbrains.spring.mvc.services.ProductService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
@@ -24,11 +22,28 @@ public class ProductsController {
 
     @GetMapping
     public String showAllProducts(Model model,
-                                  @RequestParam(name = "p", defaultValue = "1") Integer pageNumber,
+//                                  @RequestParam(name = "p", defaultValue = "1") Integer pageNumber,
                                   @RequestParam(name = "min_cost", required = false) Integer minCost,
                                   @RequestParam(name = "max_cost", required = false) Integer maxCost) {
 
-        List<Product> products = productService.findAll(pageNumber).getContent();
+        if(maxCost != null && minCost != null){
+            List<Product> products = productService.findByMaxAndMinCost(/*pageNumber*/minCost, maxCost)/*.getContent()*/;
+            model.addAttribute("products", products);
+            return "all_products";
+        }
+
+        if(minCost != null){
+            List<Product> products = productService.findByMinCost(/*pageNumber,*/ minCost)/*.getContent()*/;
+            model.addAttribute("products", products);
+            return "all_products";
+        }
+
+        if(maxCost != null){
+            List<Product> products = productService.findByMaxCost(/*pageNumber,*/ maxCost)/*.getContent()*/;
+            model.addAttribute("products", products);
+            return "all_products";
+        }
+        List<Product> products = productService.findAll(/*pageNumber*/)/*.getContent()*/;
         model.addAttribute("products", products);
         return "all_products";
     }
