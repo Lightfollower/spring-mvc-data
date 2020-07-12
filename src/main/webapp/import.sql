@@ -1,0 +1,3 @@
+DROP TABLE products IF EXISTS;
+CREATE TABLE IF NOT EXISTS products (id bigserial, title VARCHAR(255), cost int, PRIMARY KEY (id));
+INSERT INTO products (title, cost) VALUES ('prod1', 70), ('prod2', 80), ('prod3', 50), ('prod4', 60), ('prod5', 80), ('prod6', 80), ('prod7', 60), ('prod8', 90), ('prod9', 50), ('prod10', 60), ('prod11', 40), ('prod12', 70), ('prod13', 80), ('prod14', 40), ('prod15', 50), ('prod16', 70), ('prod17', 80), ('prod18', 90), ('prod19', 90), ('prod20', 50);
